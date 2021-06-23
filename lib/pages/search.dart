@@ -396,18 +396,16 @@ class _SearchNavBarState extends State<SearchNavBar> {
                           margin: EdgeInsets.symmetric(horizontal: 6),
                           child: TextField(
                             controller: textEditingController,
+                            onSubmitted: (val) {
+                              onConfirm(context, val);
+                            },
                             onChanged: (val) {
-                              if (widget.onChange != null) {
-                                widget.onChange!(val);
-                              }
-
-                              setState(() {
-                                keyword = val;
-                              });
+                              onChange(val);
                             },
                             style: TextStyle(
                               height: 1.6,
                             ),
+                            textInputAction: TextInputAction.search,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "想吃点啥？",
@@ -420,20 +418,14 @@ class _SearchNavBarState extends State<SearchNavBar> {
                         child: hasVal
                             ? InkWell(
                                 onTap: () {
-                                  if (widget.onClear != null) {
-                                    widget.onClear!();
-                                  }
-                                  updateKeyword("");
+                                  clear();
                                 },
                                 child: Icon(Icons.close_sharp, size: 18))
                             : Container(),
                       ),
                       InkWell(
                         onTap: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          if (widget.onConfirm != null && hasVal) {
-                            widget.onConfirm!(keyword);
-                          }
+                          onConfirm(context, keyword);
                         },
                         child: Container(
                           margin: EdgeInsets.only(left: 6, right: 6),
@@ -455,5 +447,29 @@ class _SearchNavBarState extends State<SearchNavBar> {
         ),
       ),
     );
+  }
+
+  void clear() {
+    if (widget.onClear != null) {
+      widget.onClear!();
+    }
+    updateKeyword("");
+  }
+
+  void onChange(String val) {
+    if (widget.onChange != null) {
+      widget.onChange!(val);
+    }
+
+    setState(() {
+      keyword = val;
+    });
+  }
+
+  void onConfirm(BuildContext context, String key) {
+    FocusScope.of(context).requestFocus(FocusNode());
+    if (widget.onConfirm != null && hasVal) {
+      widget.onConfirm!(key);
+    }
   }
 }
