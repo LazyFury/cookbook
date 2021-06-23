@@ -1,8 +1,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.lazyfury.cookbook">
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE	"/>
+<!--    <uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!--    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>-->
+<!--    <uses-permission android:name="android.permission.INSTALL_PACKAGES"></uses-permission>-->
+
    <application
         android:label="cookbook"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7365907728205811~8856243502"/>
+       
+       
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

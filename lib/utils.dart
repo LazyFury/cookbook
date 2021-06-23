@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 String appkey = "369bd3e0501a26d1";
@@ -30,7 +30,8 @@ class Fetch {
   static Dio getDioInstance() {
     Dio dio =
         new Dio(BaseOptions(baseUrl: baseUrl, responseType: ResponseType.json));
-
+    dio.interceptors.add(
+        DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())));
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions config, handler) {
       config.queryParameters.putIfAbsent("appkey", () => appkey);
