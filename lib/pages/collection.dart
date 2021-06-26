@@ -19,7 +19,7 @@ class CollectionPageState extends State<CollectionPage> {
   List<BookModel> books = [];
   List<int> hideIds = [];
 
-  update() async {
+  Future<void> update() async {
     var _books = await collectionPrefs.all;
     setState(() {
       books = _books;
@@ -29,7 +29,6 @@ class CollectionPageState extends State<CollectionPage> {
   @override
   void initState() {
     super.initState();
-
     update();
   }
 
@@ -64,6 +63,7 @@ class CollectionPageState extends State<CollectionPage> {
                         });
                       }
                     },
+                    afterRouteChanege: update,
                   )
                 : Container();
           }, childCount: books.length))

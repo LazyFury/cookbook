@@ -77,7 +77,7 @@ class SettingPageState extends State<SettingPage> {
           SplitWidget(),
           item("领取购物优惠券",
               color: Colors.red,
-              onTap: () => launchUrl("https://tao.abadboy.cn")),
+              onTap: () => launchUrl("http://ijgqr.yhzu.cn")),
           SplitWidget(),
           Text("©Copyright 2021~2022"),
         ],

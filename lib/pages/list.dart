@@ -81,7 +81,10 @@ class ListPageState extends State<ListPage> {
 class FoodBookView extends StatefulWidget {
   final BookModel book;
   final Function(bool isCollected)? onChange;
-  FoodBookView({Key? key, required this.book, this.onChange}) : super(key: key);
+  final Future<void> Function()? afterRouteChanege;
+  FoodBookView(
+      {Key? key, required this.book, this.onChange, this.afterRouteChanege})
+      : super(key: key);
 
   @override
   _FoodBookViewState createState() => _FoodBookViewState();
@@ -113,14 +116,18 @@ class _FoodBookViewState extends State<FoodBookView> {
         children: [
           Expanded(
             child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(PageRouteBuilder(
+              onTap: () async {
+                await Navigator.of(context).push(PageRouteBuilder(
                     pageBuilder: (context, animation, animation1) {
                   return new FadeTransition(
                     opacity: animation,
                     child: DetailPage(book: widget.book),
                   );
                 }));
+
+                if (widget.afterRouteChanege != null) {
+                  await widget.afterRouteChanege!();
+                }
               },
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
